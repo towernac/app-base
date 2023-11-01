@@ -93,7 +93,8 @@ class ApiController extends AbstractController
      */
     public function getAction()
     {
-        $this->render(__METHOD__, ['method' => $this->method, 'params' => $this->params]);
+        $this->render(__METHOD__, [rand(1,9), rand(1,9), rand(1000,9999), rand(1,5), rand(555,297834)]);
+
     }
 
     /**
