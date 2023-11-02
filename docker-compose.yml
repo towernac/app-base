@@ -10,8 +10,10 @@ services:
       - ./docker/assets:/home/webdriver/assets:ro
     ports:
       - 127.0.0.1:5900:5900
-app:
-  build: ./docker/app/
-  volumes:
-    - ./:/var/www/application
-  command: tail -f /dev/null
+  app:
+    build: ./docker/app/
+    volumes:
+      - ./:/var/www/application
+    command: apache2-foreground
+    ports:
+      - 127.0.0.1:8080:80
