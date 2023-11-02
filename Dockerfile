@@ -27,9 +27,13 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 # Apache vhost configuration
 ENV APACHE_DOCUMENT_ROOT /var/www/application
-COPY ../../ ${APACHE_DOCUMENT_ROOT}/
-COPY 001-application.conf /etc/apache2/sites-available/
+COPY . ${APACHE_DOCUMENT_ROOT}/
+COPY docker/app/001-application.conf /etc/apache2/sites-available/
 RUN a2enmod rewrite \
     && a2dissite 000-default default-ssl \
     && a2ensite 001-application \
     && apache2ctl restart
+
+ENV COMPOSER_ALLOW_SUPERUSER 1
+RUN cd ${APACHE_DOCUMENT_ROOT}/ \
+    && /usr/local/bin/composer install
